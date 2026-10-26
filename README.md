@@ -169,7 +169,6 @@ The `trie.py` and `test_trie.py` files must be in the same folder.
 6. To run the automated tests, open Command Prompt in the project folder and execute:
 
    ```bash
-   
    py -m unittest -v test_trie
    ```
 ## 12. Limitations
