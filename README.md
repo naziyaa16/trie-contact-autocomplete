@@ -89,16 +89,17 @@ Let:
 * P = length of the search prefix.
 * S = number of Trie nodes explored during autocomplete.
 * C = total number of characters stored across all contacts.
-
-| Operation            | Time Complexity | Explanation                                                |
-| -------------------- | --------------- | ---------------------------------------------------------- |
-| Insert Contact       | O(L)            | Processes each character once.                             |
-| Search Contact       | O(L)            | Follows the characters of the contact name.                |
-| Find Prefix Node     | O(P)            | Processes each prefix character.                           |
-| Autocomplete         | O(P + S)        | Finds the prefix node and explores its subtree.            |
-| Delete Contact       | O(L)            | Searches for the contact and processes its character path. |
-| Display All Contacts | O(C)            | Traverses the Trie and collects all stored contacts.       |
-
+* K = number of autocomplete suggestions returned.
+* N = number of contacts stored in the Trie.
+  
+| Operation            | Time Complexity    | Explanation                                                  |
+| -------------------- | ----------------   | -----------------------------------------------------------  |
+| Insert Contact       | O(L)               | Processes each character once.                               |
+| Search Contact       | O(L)               | Follows the characters of the contact name.                  |
+| Find Prefix Node     | O(P)               | Processes each prefix character.                             |
+| Autocomplete         | O(P + S + K log K) | Finds the prefix node, collects suggestions, and sorts them. |
+| Delete Contact       | O(L)               | Searches for the contact and processes its character path.   |
+| Display All Contacts | O(C + N log N) | Traverses the Trie, collects contacts, and sorts them. |
 These bounds assume dictionary operations take O(1) time on average. For autocomplete, S represents the number of nodes explored, including the work needed to collect the matching names.
 
 ## 8. Space Complexity Analysis
@@ -124,6 +125,33 @@ The following test cases are used to verify the program:
 | Delete a nonexistent contact           | Contact not found                |
 | Display all contacts                   | All remaining contacts displayed |
 
+### Automated Testing
+
+The project includes a `test_trie.py` file that uses Python's `unittest` module to test the Trie implementation.
+
+The nine automated tests cover:
+
+1. Searching for an existing contact.
+2. Searching without considering capitalization.
+3. Searching for a nonexistent contact.
+4. Generating autocomplete suggestions.
+5. Deleting an existing contact.
+6. Deleting a nonexistent contact.
+7. Deleting a contact while preserving contacts that share its prefix.
+8. Handling an empty contact name during deletion.
+9. Inserting a new contact.
+
+All nine tests passed during local testing.
+
+To run the tests, open a terminal in the project folder and execute:
+
+```bash
+py -m unittest -v test_trie
+```
+
+The `trie.py` and `test_trie.py` files must be in the same folder.
+
+
 ## 10. Technologies Used
 
 * Programming Language: Python
@@ -138,7 +166,12 @@ The following test cases are used to verify the program:
 3. Open `main.py` using Python IDLE.
 4. Select **Run → Run Module** or press F5.
 5. Choose an operation from the menu and follow the prompts.
+6. To run the automated tests, open Command Prompt in the project folder and execute:
 
+   ```bash
+   
+   py -m unittest -v test_trie
+   ```
 ## 12. Limitations
 
 * The current implementation stores contact names rather than complete phone numbers and contact details.
